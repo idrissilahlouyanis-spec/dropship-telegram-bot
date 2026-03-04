@@ -1,30 +1,30 @@
 import os
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
-from openai import OpenAI
 
 TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "🚀 Dropshipping AI Bot\n\n"
-        "Commands:\n"
-        "/top10 - Find winning dropshipping products"
+        "🚀 Dropshipping AI Bot\n\nCommands:\n/top10 - Get 10 product ideas"
     )
 
 async def top10(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    products = """
+🔥 Top 10 Dropshipping Product Ideas
 
-    prompt = "Give me 10 winning dropshipping products in 2026 with short explanation."
-
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[{"role": "user", "content": prompt}]
-    )
-
-    text = response.choices[0].message.content
-
-    await update.message.reply_text(text)
+1. Portable Blender
+2. LED Sunset Lamp
+3. Pet Hair Remover Roller
+4. Smart Posture Corrector
+5. Magnetic Phone Charger
+6. Mini Projector
+7. Dog Paw Cleaner
+8. Car Interior LED Lights
+9. Automatic Soap Dispenser
+10. Foldable Laptop Stand
+"""
+    await update.message.reply_text(products)
 
 app = ApplicationBuilder().token(TOKEN).build()
 
